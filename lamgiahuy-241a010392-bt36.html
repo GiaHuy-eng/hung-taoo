@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hứng táo</title>
+<style>
+  :root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    --bg: #e8efe2;
+    --fg: #1c2a21;
+    --muted: #55655a;
+    --btn-bg: #1f6f43;
+    --btn-fg: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121c16; --fg: #e4eddf; --muted: #9db0a2; --btn-bg: #5fbf84; --btn-fg: #0c1a11;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121c16; --fg: #e4eddf; --muted: #9db0a2; --btn-bg: #5fbf84; --btn-fg: #0c1a11;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  *, *::before, *::after { box-sizing: inherit; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: ui-rounded, "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  main {
+    padding: 24px 16px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  h1 { margin: 0; font-size: 1.6rem; font-weight: 800; }
+  .hint { margin: 0; color: var(--muted); text-align: center; }
+
+  .stage { max-width: 100%; overflow-x: auto; }
+  .board { width: 500px; }
+
+  /* Điểm số, mạng sống, nút bắt đầu */
+  #hud { display: flex; align-items: center; gap: 22px; margin-bottom: 10px; font-size: 1.1rem; }
+  #hud strong { font-size: 1.4rem; font-variant-numeric: tabular-nums; }
+  #start-btn {
+    margin-left: auto; padding: 10px 22px; border: 0; border-radius: 999px;
+    background: var(--btn-bg); color: var(--btn-fg);
+    font: inherit; font-weight: 700; cursor: pointer;
+  }
+  #start-btn:focus-visible { outline: 3px solid var(--fg); outline-offset: 3px; }
+
+  /* Khung game 500 x 400 */
+  #game-container {
+    position: relative;
+    width: 500px;
+    height: 400px;
+    overflow: hidden;
+    border: 3px solid #7fa6c4;
+    border-radius: 16px;
+    background: linear-gradient(#dff1ff, #f6fbe9);
+  }
+
+  /* Giỏ hứng: hình giỏ màu nâu ở đáy khung */
+  #basket {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 84px;
+    height: 44px;
+    background: repeating-linear-gradient(90deg, #8a5a2b 0 8px, #7a4e24 8px 10px);
+    border-top: 5px solid #5e3b17;
+    border-radius: 6px 6px 42px 42px / 6px 6px 36px 36px;
+  }
+
+  /* Quả táo */
+  #apple {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ff8d8d, #d7263d 62%, #a3162a);
+  }
+  #apple::after {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 13px;
+    width: 9px;
+    height: 11px;
+    background: #3f9a4c;
+    border-radius: 0 100% 0 100%;
+  }
+
+  /* Thông báo Game Over */
+  #message {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(20, 28, 24, 0.62);
+    color: #fff;
+    text-align: center;
+  }
+  #message.show { display: flex; }
+  #message .title { font-size: 2.4rem; font-weight: 800; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Hứng táo</h1>
+
+  <div class="stage">
+    <div class="board">
+      <div id="hud">
+        <div>Điểm: <strong id="score">0</strong></div>
+        <div>Mạng: <strong id="lives">3</strong></div>
+        <button id="start-btn" type="button">Bắt đầu</button>
+      </div>
+
+      <div id="game-container">
+        <div id="apple"></div>
+        <div id="basket"></div>
+        <div id="message">
+          <div class="title">Game Over</div>
+          <div id="final-score"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="hint">Bấm “Bắt đầu”, rồi dùng phím ← và → để di chuyển giỏ.</p>
+</main>
+
+<script src="lamgiahuy-241a010392-bt36.js"></script>
+</body>
+</html>
